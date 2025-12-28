@@ -50,9 +50,6 @@ jloopend:
     @ end iloop
 iloopend:
     @ end isort
-    mov r8, #0 @ resets r8 to intial value
-    mov r9, #0 @ resets r9 to intial value
-    mov r10, #0 @ resets r10 to intial value
     bx lr @ returns to main
 
 .global main
@@ -110,7 +107,7 @@ exit:
 @@@@@@@@@@@@@@@@@
 .data
 number: .word 0 @ place to hold input number
-length: .word 0 @ place to hold length of array
+.length: .word 0 @ place to hold length of array
 array: .space 100 @ room for 25 integers = 100 bytes
 return: .word 0 @ place for return address of main
 prompt: .asciz "Input a positive integer (negative to quit): "
