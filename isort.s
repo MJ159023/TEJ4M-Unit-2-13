@@ -120,9 +120,11 @@ output:
     ploop: cmp r6, r5 @ n - counter
     ble exit @ done printing
     add r3, r4, r5, LSL #2 @ r3 <- &array[4*counter]
-    ldr r1, [r3] @ r1 <- array[4*counter]
+
+    ldrb r1, [r3], #1 @ r1 <- array[4*counter] and then post increment one
     ldr r0, =printFMT @ r0 <- &print format
     bl printf
+
     add r5, r5, #1 @ n++
     b ploop
     @@@@@@@@@@@@@@@@ EXIT
@@ -142,7 +144,7 @@ return: .word 0 @ place for return address of main
 prompt: .asciz "Input a positive integer (negative to quit): "
 result: .asciz "Sorted, those integers are: \n"
 scanFMT: .asciz "%s"
-printFMT: .asciz " %d\n"
+printFMT: .asciz " %c\n"
 @@@@@@@@@@@@@@@@@
 /* External */
 .global printf
