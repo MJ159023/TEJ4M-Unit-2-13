@@ -94,12 +94,11 @@ input:
     ldr r7, =length @ r7 <- &length
     ldr r7, [r7] @ keep r7 as constant for length
     ldr r0, =buffer @ r0 <- &buffer
-    ldr r8, =array @ r8 <- &array
 
     @ loops input into array for sorting
 loop:
     ldrb r5, [r0] @ r0 <- *r0 stores one byte of ascii
-    add r8, r8, r6, lsl #2 @ r8 <- &address[counter * 4]
+    add r8, r4, r6, LSL #2 @ r8 <- &address[counter * 4]
     str r5, [r8]
     add r0, r0, #1 @ r0 <- r0 + 1
     add r6, r6, #1 @ r6 <- r6 + 1
