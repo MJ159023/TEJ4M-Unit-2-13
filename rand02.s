@@ -26,7 +26,6 @@ main:
 
     ldr r0, =scanFMT @ r0 <- &scanFMT
     ldr r1, =max @ r1 <- &max
-    ldr r1, [r1] @ r1 <- *r1
     bl scanf @ call scanf
 
     ldr r1, =max @ r1 <- &max
@@ -40,7 +39,6 @@ main:
 
     ldr r0, =scanFMT @ r0 <- &scanFMT
     ldr r1, =min @ r1 <- &min
-    ldr r1, [r1] @ r1 <- *r1
     bl scanf @ call scanf
 
     ldr r1, =min @ r1 <- &min
@@ -58,7 +56,6 @@ main:
 
     ldr r0, =scanFMT @ r0 <- &scanFMT
     ldr r1, =returns @ r1 <- &returns
-    ldr r1, [r1] @ r1 <- *r1
     bl scanf @ call scanf
 
     ldr r1, =returns @ r1 <- &returns
@@ -66,8 +63,11 @@ main:
 
     cmp r1, #99
     bge Exit @ exits if r1 is greater than 99
+    cmp r1, #0
+    ble Exit @ also exits if returns is 0
 
     mov r1, r1, lsl #2 @ r1 <- r1 * 4
+    sub r1, r1, #4
     ldr r2, =returns @ r2 <- &returns
     str r1, [r2] @ *r2 <- r1
 
