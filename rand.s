@@ -14,9 +14,14 @@ ldr r1, =return @ save return address
 str lr, [r1]
 /* ldr r0, #31416 @ X0 - initialized (could be input) */
 
-mov r0, #0x7a
-mov r0, r0, LSL #8
-add r0, r0, #0xb8 @ X0 = r0 = 0x7a68 = 31416
+ldr r0, =message @ r0 <- &message
+bl puts @ call puts
+
+ldr r0, =scanFMT @ r0 <- &scanFMT
+ldr r1, =number @ r1 <- &number
+bl scanf @ call scanf
+ldr r0, =return @ r0 <- &number
+ldr r0, [r0] @ r0 <- *r0
 
 /* ldr r4, #32445 @ a - initialized */
 
@@ -50,6 +55,7 @@ bl printf
 mov r0, r8 @ put X back
 ldr r1, =list @ prepare to store
 str r0, [r1, #-4] @ store and then decrement counter
+add r6, r6, #-4 @ r6 <- r6 - 4
 
 @End_of_Loop
 b Loop
@@ -60,9 +66,16 @@ bx lr
 @
 .data
 list: .space 400 @ room for 100 integers
+number: .word 0 @ reprsents X0
 return: .word 0 @ save return address
 format: .asciz " %d "
+enter: .asciz "\n"
+message: .asciz "Input X0: "
+scanFMT: .asciz "%d"
+
 @
 /* External */
+.global puts
 .global printf
+.global scanf
 
