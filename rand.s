@@ -5,7 +5,7 @@ X[n+1] <- (aX[n] + c) mod m
 using m = 2^16 = 65536 which works on a 16-bit machine well
 using a = 32445 so that a mod 8 = 5 and 99m/100 > a > m/100
 using c = 1
-using X0 = 31416 in r0 as seed (could be input)
+using X0 = input
 */
 .text
 .global main
