@@ -24,19 +24,18 @@ main:
     ldr r0, [r0] @ r0 <- *r0
 
     /* ldr r4, #32445 @ a - initialized */
-
     mov r4, #0x7e
     mov r4, r4, LSL #8
     add r4, r4, #0xbd @ a = r4 = 0x7ebd = 32445
 
     /* ldr r5, #0x0000FFFF @ mask to do modulo (m-1) - initialized */
-
     mov r5, #0xFF
     mov r5, r5, LSL #8
     add r5, r5, #0xFF @ mask = m-1 = 0x0000FFFF
     mov r6, #396 @ counter - initialized 4*100-4 for 100 ints
     mov r7, #100 @ limit - initialized so values 0-99
-    Loop: @ while counter < 100
+
+Loop: @ while counter < 100
     cmp r6, #0 @ check counter
     blt Exit @ Stop when counter passes zero
     mul r2, r0, r4 @ X = aX (mul works like this)
