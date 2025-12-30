@@ -43,13 +43,13 @@ Loop: @ while counter < 100
     add r0, #1 @ now X = aX+c
     and r0, r0, r5 @ now X = (aX+c) mod m
     mov r8, r0 @ save X in r8 temporarily
-    add r9, r0, lsr #8 @ divide by 256 (use upper 8 bits) check
+    mov r9, r0, lsr #8 @ divide by 256 (use upper 8 bits) check
     cmp r9, r7 @ check size
     bge Loop @ only want those < 100
 
     @Print
     ldr r0, =format
-    mov r1, r8 @ prepare to print
+    mov r1, r9 @ prepare to print
     bl printf
 
     @Store
