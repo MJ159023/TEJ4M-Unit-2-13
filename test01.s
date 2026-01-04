@@ -31,5 +31,12 @@ even_case:
     ldr r8, [r3, r7, lsl #2] r7 <- array[(n - 1)*4]
     str r6, [r3, r7, lsl #2] array[(n - 1)*4] <- r6
     str r8, [r3, r0, lsl #2] @ array[i*4] <- r8
+    mov r6, #0 @ reset register
+    mov r7, #0 @ reset register
+    mov r8, #0 @ reset register
+    add r0, r0, #1 @ i <- i + 1
+    str r0, [sp, #0]
+    mov r0 #0 @ reset register
+
 
 odd_case:
