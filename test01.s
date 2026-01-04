@@ -1,8 +1,13 @@
 /* heap.s */
 .data
 array: .word 1, 2, 3
+length: .word 3
+printFMT: .asciz "%d, "
+enter: .asciz "\n"
 
 .text
+.global main
+main:
 heap:
     sub sp, sp, #12
     str r0, [sp, #0] @ r0 = i
@@ -37,6 +42,7 @@ even_case:
     add r0, r0, #1 @ i <- i + 1
     str r0, [sp, #0]
     mov r0 #0 @ reset register
+    b for_loop @ loops
 
 
 odd_case:
@@ -51,3 +57,29 @@ odd_case:
     add r0, r0, #1 @ i <- i + 1
     str r0, [sp, #0]
     mov r0 #0 @ reset register
+    b for_loop @ loops
+
+base_case:
+    ldr r4, =length @ r4 <- &length
+    ldr r4, [r4] @ r4 <- *r4
+    cmp r5, r4
+    bge end @ branches once all indexs have been printed
+
+    ldr r0, =printFMT @ r0 <- &printFMT
+    ldr r1, [r3, r5, lsl #2] @ r1 <- array[r5*4]
+    bl printf @ call printf
+
+    add r5, r5, #1 @ r5 <- r5 + 1
+
+end:
+    ldr r0, =enter @ r0 <- &enter
+    bl puts @ call puts
+
+    mov r1, #1 @ r1 <- 1
+    ldr lr, [sp, #8] @ loads previous return
+    add sp, sp, #12 @ pops current leyer
+    bx lr
+
+.global puts
+.global printf
+    
