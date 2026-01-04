@@ -1,6 +1,7 @@
 /* heap.s */
 .data
 array: .word 1, 2, 3
+temp: .word 0 
 
 .text
 heap:
@@ -23,4 +24,8 @@ for_loop:
     beq even_case @ branch if even
     b odd_case @ branches if odd
 
-    
+even_case:
+    ldr r5, =temp @ r5 <- &temp
+    ldr r6, [r3, ]
+
+odd_case:
