@@ -1,10 +1,10 @@
 /* heap.s */
 .data
 return: .word 0
-array: .word 1, 2, 3
-length: .word 3
+array: .word 1, 2, 3, 4
+length: .word 4
 printFMT: .asciz "%d, "
-enter: .asciz "\n"
+enter: .asciz ""
 
 .text
 heap:
@@ -22,6 +22,7 @@ for_loop:
     cmp r0, r1
     beq end @ does for loop as long as i < n
     sub r1, r1, #1 @ n = n -1
+    mov r0, #0 @ resets i
     bl heap @ call heap
 
     ldr r0, [sp, #0]
@@ -43,7 +44,6 @@ even_case:
     mov r8, #0 @ reset register
     add r0, r0, #1 @ i <- i + 1
     str r0, [sp, #0]
-    mov r0, #0 @ reset register
     b for_loop @ loops
 
 
@@ -58,7 +58,6 @@ odd_case:
     mov r8, #0 @ reset register
     add r0, r0, #1 @ i <- i + 1
     str r0, [sp, #0]
-    mov r0, #0 @ reset register
     b for_loop @ loops
 
 base_case:
@@ -69,7 +68,7 @@ base_case:
 
 loop:
     cmp r5, r4
-    beq end @ branches once all indexs have been printed
+    beq space @ branches once all indexs have been printed
 
     ldr r0, =printFMT @ r0 <- &printFMT
     ldr r1, [r9, r5, lsl #2] @ r1 <- array[r5*4]
@@ -78,10 +77,11 @@ loop:
     add r5, r5, #1 @ r5 <- r5 + 1
     b loop @ loops
 
-end:
+space:
     ldr r0, =enter @ r0 <- &enter
     bl puts @ call puts
 
+end:
     mov r1, #1 @ r1 <- 1
     mov r4, #0 @ r4 <- 0
     mov r5, #0 @ r5 <- 0
