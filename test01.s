@@ -18,4 +18,9 @@ for_loop:
     sub r1, r1, #1 @ n = n -1
     bl heap @ call heap
 
-    and 
+    and r2, r1, #1 @ get remainder to check if odd or even
+    cmp r2, #0
+    beq even_case @ branch if even
+    b odd_case @ branches if odd
+
+    
