@@ -1,7 +1,6 @@
 /* heap.s */
 .data
 array: .word 1, 2, 3
-temp: .word 0 
 
 .text
 heap:
@@ -27,7 +26,10 @@ for_loop:
     b odd_case @ branches if odd
 
 even_case:
-    ldr r5, =temp @ r5 <- &temp
-    ldr r6, [r3, ]
+    ldr r6, [r3, r0, lsl #2] @ r6 <- array[i*4]
+    sub r7, r1, #1 @ r7 <- n - 1
+    ldr r8, [r3, r7, lsl #2] r7 <- array[(n - 1)*4]
+    str r6, [r3, r7, lsl #2] array[(n - 1)*4] <- r6
+    str r8, [r3, r0, lsl #2] @ array[i*4] <- r8
 
 odd_case:
