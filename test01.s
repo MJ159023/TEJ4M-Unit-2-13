@@ -1,13 +1,12 @@
 /* heap.s */
 .data
+return: .word: 0
 array: .word 1, 2, 3
 length: .word 3
 printFMT: .asciz "%d, "
 enter: .asciz "\n"
 
 .text
-.global main
-main:
 heap:
     sub sp, sp, #12
     str r0, [sp, #0] @ r0 = i
@@ -25,17 +24,17 @@ for_loop:
 
     ldr r0, [sp, #0]
     ldr r1, [sp, #4]
-    and r2, r1, #1 @ get remainder to check if odd or even
-    cmp r2, #0
+    and r3, r1, #1 @ get remainder to check if odd or even
+    cmp r3, #0
     beq even_case @ branch if even
     b odd_case @ branches if odd
 
 even_case:
-    ldr r6, [r3, r0, lsl #2] @ r6 <- array[i*4]
+    ldr r6, [r2, r0, lsl #2] @ r6 <- array[i*4]
     sub r7, r1, #1 @ r7 <- n - 1
-    ldr r8, [r3, r7, lsl #2] r7 <- array[(n - 1)*4]
-    str r6, [r3, r7, lsl #2] array[(n - 1)*4] <- r6
-    str r8, [r3, r0, lsl #2] @ array[i*4] <- r8
+    ldr r8, [r2, r7, lsl #2] r7 <- array[(n - 1)*4]
+    str r6, [r2, r7, lsl #2] array[(n - 1)*4] <- r6
+    str r8, [r2, r0, lsl #2] @ array[i*4] <- r8
     mov r6, #0 @ reset register
     mov r7, #0 @ reset register
     mov r8, #0 @ reset register
@@ -46,11 +45,11 @@ even_case:
 
 
 odd_case:
-    ldr r6, [r3, #0] @ r6 <- array[0]
+    ldr r6, [r2, #0] @ r6 <- array[0]
     sub r7, r1, #1 @ r7 <- n - 1
-    ldr r8, [r3, r7, lsl #2] r7 <- array[(n - 1)*4]
-    str r6, [r3, r7, lsl #2] array[(n - 1)*4] <- r6
-    str r8, [r3, #0] @ array[0] <- r8
+    ldr r8, [r2, r7, lsl #2] r7 <- array[(n - 1)*4]
+    str r6, [r2, r7, lsl #2] array[(n - 1)*4] <- r6
+    str r8, [r2, #0] @ array[0] <- r8
     mov r6, #0 @ reset register
     mov r7, #0 @ reset register
     mov r8, #0 @ reset register
@@ -66,7 +65,7 @@ base_case:
     bge end @ branches once all indexs have been printed
 
     ldr r0, =printFMT @ r0 <- &printFMT
-    ldr r1, [r3, r5, lsl #2] @ r1 <- array[r5*4]
+    ldr r1, [r2, r5, lsl #2] @ r1 <- array[r5*4]
     bl printf @ call printf
 
     add r5, r5, #1 @ r5 <- r5 + 1
@@ -78,6 +77,21 @@ end:
     mov r1, #1 @ r1 <- 1
     ldr lr, [sp, #8] @ loads previous return
     add sp, sp, #12 @ pops current leyer
+    bx lr
+
+.global main
+main:
+    ldr r1, =return
+    str lr, [r1]
+
+    mov r0, #0
+    ldr r1, =length
+    ldr r1, [r1]
+    ldr r2, =array
+    bl heap @ call heap
+
+    ldr lr, =return
+    ldr lr, [lr]
     bx lr
 
 .global puts
