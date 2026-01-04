@@ -40,3 +40,14 @@ even_case:
 
 
 odd_case:
+    ldr r6, [r3, #0] @ r6 <- array[0]
+    sub r7, r1, #1 @ r7 <- n - 1
+    ldr r8, [r3, r7, lsl #2] r7 <- array[(n - 1)*4]
+    str r6, [r3, r7, lsl #2] array[(n - 1)*4] <- r6
+    str r8, [r3, #0] @ array[0] <- r8
+    mov r6, #0 @ reset register
+    mov r7, #0 @ reset register
+    mov r8, #0 @ reset register
+    add r0, r0, #1 @ i <- i + 1
+    str r0, [sp, #0]
+    mov r0 #0 @ reset register
