@@ -58,7 +58,7 @@ main:
     ldr r1, =returns @ r1 <- &returns
     bl scanf @ call scanf
 
-    ldr r1, =returns @ r1 <- &returns
+    ldr r1, =returns @ r1 <- &returns @@@@
     ldr r1, [r1] @ r1 <- *r1
 
     cmp r1, #99

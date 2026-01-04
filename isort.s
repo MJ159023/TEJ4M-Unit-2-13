@@ -141,8 +141,8 @@ buffer: .space 100 @ creates space for 100 ascii bytes
 length: .word 0 @ place to hold length of array
 array: .space 100 @ room for 25 integers = 100 bytes
 return: .word 0 @ place for return address of main
-prompt: .asciz "Input a positive integer (negative to quit): "
-result: .asciz "Sorted, those integers are: \n"
+prompt: .asciz "Input a String: "
+result: .asciz "Sorted, those characters are: \n"
 scanFMT: .asciz "%s"
 printFMT: .asciz " %c\n"
 @@@@@@@@@@@@@@@@@
