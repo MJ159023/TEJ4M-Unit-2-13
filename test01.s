@@ -1,6 +1,10 @@
 /* heap.s */
 .data
+<<<<<<< HEAD
 return: .word 0
+=======
+return: .word: 0
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
 array: .word 1, 2, 3
 length: .word 3
 printFMT: .asciz "%d, "
@@ -18,7 +22,11 @@ heap:
 
 for_loop:
     cmp r0, r1
+<<<<<<< HEAD
     bge end @ does for loop as long as i < n
+=======
+    bge end: @ does for loop as long as i < n
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
     sub r1, r1, #1 @ n = n -1
     bl heap @ call heap
 
@@ -32,38 +40,59 @@ for_loop:
 even_case:
     ldr r6, [r2, r0, lsl #2] @ r6 <- array[i*4]
     sub r7, r1, #1 @ r7 <- n - 1
+<<<<<<< HEAD
     ldr r8, [r2, r7, lsl #2] @ r7 <- array[(n - 1)*4]
     str r6, [r2, r7, lsl #2] @ array[(n - 1)*4] <- r6
+=======
+    ldr r8, [r2, r7, lsl #2] r7 <- array[(n - 1)*4]
+    str r6, [r2, r7, lsl #2] array[(n - 1)*4] <- r6
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
     str r8, [r2, r0, lsl #2] @ array[i*4] <- r8
     mov r6, #0 @ reset register
     mov r7, #0 @ reset register
     mov r8, #0 @ reset register
     add r0, r0, #1 @ i <- i + 1
     str r0, [sp, #0]
+<<<<<<< HEAD
     mov r0, #0 @ reset register
+=======
+    mov r0 #0 @ reset register
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
     b for_loop @ loops
 
 
 odd_case:
     ldr r6, [r2, #0] @ r6 <- array[0]
     sub r7, r1, #1 @ r7 <- n - 1
+<<<<<<< HEAD
     ldr r8, [r2, r7, lsl #2] @ r7 <- array[(n - 1)*4]
     str r6, [r2, r7, lsl #2] @ array[(n - 1)*4] <- r6
+=======
+    ldr r8, [r2, r7, lsl #2] r7 <- array[(n - 1)*4]
+    str r6, [r2, r7, lsl #2] array[(n - 1)*4] <- r6
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
     str r8, [r2, #0] @ array[0] <- r8
     mov r6, #0 @ reset register
     mov r7, #0 @ reset register
     mov r8, #0 @ reset register
     add r0, r0, #1 @ i <- i + 1
     str r0, [sp, #0]
+<<<<<<< HEAD
     mov r0, #0 @ reset register
+=======
+    mov r0 #0 @ reset register
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
     b for_loop @ loops
 
 base_case:
     ldr r4, =length @ r4 <- &length
     ldr r4, [r4] @ r4 <- *r4
+<<<<<<< HEAD
     mov r5, #0
 
 loop:
+=======
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
     cmp r5, r4
     bge end @ branches once all indexs have been printed
 
@@ -72,15 +101,21 @@ loop:
     bl printf @ call printf
 
     add r5, r5, #1 @ r5 <- r5 + 1
+<<<<<<< HEAD
     b loop
+=======
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
 
 end:
     ldr r0, =enter @ r0 <- &enter
     bl puts @ call puts
 
     mov r1, #1 @ r1 <- 1
+<<<<<<< HEAD
     mov r4, #0
     mov r5, #0
+=======
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
     ldr lr, [sp, #8] @ loads previous return
     add sp, sp, #12 @ pops current leyer
     bx lr
@@ -93,7 +128,11 @@ main:
     mov r0, #0
     ldr r1, =length
     ldr r1, [r1]
+<<<<<<< HEAD
     ldr r2, =array @ r2 <- &array
+=======
+    ldr r2, =array
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
     bl heap @ call heap
 
     ldr lr, =return
@@ -102,4 +141,8 @@ main:
 
 .global puts
 .global printf
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 27c5dd7521ead7f3fb27248eef9ab83e91551efc
